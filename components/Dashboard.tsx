@@ -1,7 +1,13 @@
 "use client";
 import {
+  AreaChart,
+  Card,
   CategoryBar,
   Divider,
+  DonutChart,
+  List,
+  ListItem,
+  ProgressBar,
   Tab,
   TabGroup,
   TabList,
@@ -13,13 +19,49 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@tremor/react";
-import { AreaChart, Card, ProgressBar } from "@tremor/react";
 
 import { RiExternalLinkLine } from "@remixicon/react";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
+
+const data3 = [
+  {
+    name: "Travel",
+    amount: 6730,
+    share: "32.1%",
+    color: "bg-cyan-500",
+  },
+  {
+    name: "IT & equipment",
+    amount: 4120,
+    share: "19.6%",
+    color: "bg-blue-500",
+  },
+  {
+    name: "Training & development",
+    amount: 3920,
+    share: "18.6%",
+    color: "bg-indigo-500",
+  },
+  {
+    name: "Office supplies",
+    amount: 3210,
+    share: "15.3%",
+    color: "bg-violet-500",
+  },
+  {
+    name: "Communication",
+    amount: 3010,
+    share: "14.3%",
+    color: "bg-fuchsia-500",
+  },
+];
+
+const currencyFormatter = (number: any) => {
+  return "$" + Intl.NumberFormat("us").format(number).toString();
+};
 
 const data = [
   {
@@ -133,8 +175,8 @@ const data2 = [
 
 function Dashboard() {
   return (
-    <div className="max-w-screen-xl flex flex-col mx-auto my-20">
-      <div className="grid grid-cols-4 gap-8">
+    <div className="max-w-screen-xl flex flex-col mx-auto my-20 px-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {new Array(4).fill(null).map((_, i) => {
           return (
             <Card className="mx-auto max-w-md" key={i}>
@@ -154,7 +196,7 @@ function Dashboard() {
         })}
       </div>
 
-      <div className="mt-16 grid grid-cols-2 gap-10">
+      <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-10">
         <Card className="sm:mx-auto sm:max-w-xl">
           <div className="flex items-center space-x-2">
             <h3 className="text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
@@ -249,6 +291,98 @@ function Dashboard() {
             startEndOnly={true}
             className="mt-8 h-48"
           />
+        </Card>
+      </div>
+
+      <div className="pt-20 grid grid-cols-1 md:grid-cols-2 gap-x-8">
+        <Card className="sm:mx-auto sm:max-w-xl">
+          <h3 className="text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
+            Total expenses by category
+          </h3>
+          <DonutChart
+            className="mt-8"
+            data={data3}
+            category="amount"
+            index="name"
+            valueFormatter={currencyFormatter}
+            showTooltip={false}
+            colors={["cyan", "blue", "indigo", "violet", "fuchsia"]}
+          />
+          <p className="mt-8 flex items-center justify-between text-tremor-label text-tremor-content dark:text-dark-tremor-content">
+            <span>Category</span>
+            <span>Amount / Share</span>
+          </p>
+          <List className="mt-2">
+            {data3.map((item) => (
+              <ListItem key={item.name} className="space-x-6">
+                <div className="flex items-center space-x-2.5 truncate">
+                  <span
+                    className={classNames(
+                      item.color,
+                      "h-2.5 w-2.5 shrink-0 rounded-sm"
+                    )}
+                    aria-hidden={true}
+                  />
+                  <span className="truncate dark:text-dark-tremor-content-emphasis">
+                    {item.name}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="font-medium tabular-nums text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                    {currencyFormatter(item.amount)}
+                  </span>
+                  <span className="rounded-tremor-small bg-tremor-background-subtle px-1.5 py-0.5 text-tremor-label font-medium tabular-nums text-tremor-content-emphasis dark:bg-dark-tremor-background-subtle dark:text-dark-tremor-content-emphasis">
+                    {item.share}
+                  </span>
+                </div>
+              </ListItem>
+            ))}
+          </List>
+        </Card>
+
+        <Card className="sm:mx-auto sm:max-w-xl">
+          <h3 className="text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
+            Total expenses by category
+          </h3>
+          <DonutChart
+            className="mt-8"
+            data={data3}
+            category="amount"
+            index="name"
+            valueFormatter={currencyFormatter}
+            showTooltip={false}
+            colors={["cyan", "blue", "indigo", "violet", "fuchsia"]}
+          />
+          <p className="mt-8 flex items-center justify-between text-tremor-label text-tremor-content dark:text-dark-tremor-content">
+            <span>Category</span>
+            <span>Amount / Share</span>
+          </p>
+          <List className="mt-2">
+            {data3.map((item) => (
+              <ListItem key={item.name} className="space-x-6">
+                <div className="flex items-center space-x-2.5 truncate">
+                  <span
+                    className={classNames(
+                      item.color,
+                      "h-2.5 w-2.5 shrink-0 rounded-sm"
+                    )}
+                    aria-hidden={true}
+                  />
+                  <span className="truncate dark:text-dark-tremor-content-emphasis">
+                    {item.name}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="font-medium tabular-nums text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                    {currencyFormatter(item.amount)}
+                  </span>
+                  <span className="rounded-tremor-small bg-tremor-background-subtle px-1.5 py-0.5 text-tremor-label font-medium tabular-nums text-tremor-content-emphasis dark:bg-dark-tremor-background-subtle dark:text-dark-tremor-content-emphasis">
+                    {item.share}
+                  </span>
+                </div>
+              </ListItem>
+            ))}
+          </List>
         </Card>
       </div>
 
