@@ -294,7 +294,7 @@ function Dashboard() {
         </Card>
       </div>
 
-      <div className="pt-20 grid grid-cols-1 md:grid-cols-2 gap-x-8">
+      <div className="pt-20 grid grid-cols-1 md:grid-cols-2 gap-10">
         <Card className="sm:mx-auto sm:max-w-xl">
           <h3 className="text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
             Total expenses by category
